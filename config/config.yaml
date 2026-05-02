@@ -1,0 +1,57 @@
+system:
+  name: AKIS-v2
+  version: "2.0.0"
+  log_level: INFO
+  log_dir: logs/
+
+ingestion:
+  chunk_size_words: 350
+  chunk_overlap_words: 50
+  pdf_clean: true
+
+embedding:
+  model: "BAAI/bge-small-en-v1.5"
+  cache_dir: ".cache/embeddings"
+  normalize: true
+
+retrieval:
+  faiss_top_k: 10
+  bm25_top_k: 10
+  final_top_k: 5
+  faiss_weight: 0.6
+  bm25_weight: 0.4
+  confidence_threshold: 0.45   # below this → trigger query rewrite
+
+reranker:
+  enabled: true
+  model: "cross-encoder/ms-marco-MiniLM-L-2-v2"  # tiny CPU-friendly cross-encoder
+  top_k: 5
+
+generator:
+  provider: "ollama"             # ollama | gemini | hf_local
+  ollama_model: "mistral"
+  ollama_url: "http://localhost:11434/api/generate"
+  gemini_api_key_env: "GEMINI_API_KEY"
+  max_context_tokens: 2000
+  max_retries: 2
+
+evaluator:
+  similarity_threshold_strong: 0.65
+  similarity_threshold_weak: 0.55
+  model: "all-MiniLM-L6-v2"
+  min_grounded_confidence: 50.0  # below this → uncertainty response
+
+self_healing:
+  enabled: true
+  max_rewrites: 2
+  fallback_message: "I cannot answer this question with sufficient confidence based on the provided documents."
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  reload: false
+
+cache:
+  embedding_cache: true
+  retrieval_cache: true
+  cache_ttl_seconds: 3600

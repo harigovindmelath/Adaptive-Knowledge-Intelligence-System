@@ -1,0 +1,32 @@
+# AKIS-v2 requirements
+# Pinned for reproducibility; all CPU-compatible
+
+# Web framework
+fastapi==0.110.0
+uvicorn==0.29.0
+
+# UI
+streamlit==1.33.0
+
+# ML / embeddings
+faiss-cpu==1.7.4
+sentence-transformers==2.7.0
+numpy==1.26.4
+
+# BM25
+rank-bm25==0.2.2
+
+# PDF
+pdfplumber==0.10.3
+
+# HTTP
+requests==2.31.0
+
+# Config
+PyYAML==6.0.1
+
+# API schemas
+pydantic==2.6.4
+
+# Python-multipart for FastAPI file uploads
+python-multipart==0.0.9
